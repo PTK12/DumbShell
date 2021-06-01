@@ -105,5 +105,5 @@ Maybe copying IDLE code wasn't a good idea...
 
 
 if __name__ == "__main__":
-    shell = DumbShell(True, False)
+    shell = DumbShell()
     shell.run()
