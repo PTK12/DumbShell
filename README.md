@@ -14,11 +14,11 @@ DumbShell.DumbShell().run()
 * Custom indent style/size
 * Boring prompt
 
-| Feature     | Use                 |
-|-------------|---------------------|
-| Auto-indent | Hit <Enter>         |
-| Un-indent   | Hit <Enter> <Enter> |
-| Suggestion  | Hit <Tab> <Enter>   |
+| Feature     | Use                     |
+|-------------|-------------------------|
+| Auto-indent | Hit \<Enter\>           |
+| Un-indent   | Hit \<Enter\> \<Enter\> |
+| Suggestion  | Hit \<Tab\> \<Enter\>   |
   
 TODO:
   * Fix indent counter
