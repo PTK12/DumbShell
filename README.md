@@ -16,4 +16,6 @@ Boring shell in Python that I glued together. Unstable.
 TODO:
   * Fix indent counter
   * Custom sidebar
-  
+  * Rename variables
+  * Clean-up code
+  * More abstraction!
