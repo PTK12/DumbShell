@@ -1,6 +1,13 @@
 # DumbShell
 Boring shell in Python that I glued together. Unstable.
 
+## Use
+Import it then run like so...
+```py
+import DumbShell
+DumbShell.DumbShell().run()
+```
+
 ## Features
 * Auto-indent
 * Suggested words
