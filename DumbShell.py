@@ -2,6 +2,7 @@ from code import InteractiveConsole
 import sys
 import math
 import re
+import os
 
 # Add your own modules here!
 MODULE = """
@@ -11,13 +12,14 @@ from Crypto.Util.number import *
 """.split("\n")
 
 class DumbShell:
-    locals = sys.modules['__main__'].__dict__  
+    locale = sys.modules['__main__'].__dict__  
 
-    def __init__(self, verbose=True, auto_indent=True, indent_style="|   "):
+    def __init__(self, verbose=True, auto_indent=True, indent_style="|   ", width=None):
         """
 verbose : Toggles prompt
 auto    : Toggles auto indent (indent tracker goes crazy)
 style   : How indents look
+width   : Size of terminal (Leave blank for auto)
         """
         self.v = verbose
         self.auto = auto_indent
@@ -25,12 +27,29 @@ style   : How indents look
         self.space = "    "
         if not auto_indent:
             self.space = self.style = ""
+        self.width = width
+
+    def retrieve(self):
+        if self.width:
+            return self.width
+        else:
+            try:
+                width = os.get_terminal_size().columns
+                if width < 1: # Incase something goes wrong
+                    return 80
+                return width
+            except:
+                return 80
+
+    def calc(self, space):
+        k = self.retrieve()
+        return max(k // space, 1)
 
     def setup(self, mod=MODULE):
         """
 Setup code that you'd like to be pre run
         """
-        a = InteractiveConsole(locals=self.locals)    
+        a = InteractiveConsole(locals=self.locale)    
         for i in mod:
             a.runsource(i)
         return a
@@ -53,15 +72,34 @@ Finds some matches for possible code
         """
         return {k:v for k,v in d.items() if s in k}
 
+    def big(self, iters):
+        func = lambda x: len(x.__class__.__name__)
+        a = b = 0
+        for i, j in iters:
+            a, b = max(a, len(i)), max(b, func(j))
+        return a, b
+
     def pls(self, search = None):
         """
 Outputs and finds some matches for possible code
         """
-        kek = locals
+        kek = self.locale
         if search:
             kek = self.find(search, kek)
-        for k, v in kek.items():
-            print(f"{type(v).__name__:<12} {k[:16]:<16}")        
+        thing = kek.items()
+        if len(thing) > 8:
+            num = self.calc(30)
+            for i, (k, v) in enumerate(thing):
+                print(f"{v.__class__.__name__[:12]:<12} {k[:16]:<16}|", end="")
+                if i % num == num - 1 or i + 1 == len(thing):
+                    print()
+        else:
+            b, a = self.big(thing)
+            num = self.calc(b + a + 4)
+            for i, (k, v) in enumerate(thing):
+                print(f"{v.__class__.__name__[:a]:<{a}}  {k[:b]:<{b}} |", end="")
+                if i % num == num - 1 or i + 1 == len(thing):
+                    print()
 
     def detect_str(self, inp):
         """
@@ -102,7 +140,6 @@ Maybe copying IDLE code wasn't a good idea...
                 
                 if inp.rstrip().endswith(":"):
                     ind += 1
-
 
 if __name__ == "__main__":
     shell = DumbShell()
