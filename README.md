@@ -26,3 +26,4 @@ TODO:
   * Rename variables
   * Clean-up code
   * More abstraction!
+  * Suggestions for inside classes
