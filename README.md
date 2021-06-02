@@ -27,3 +27,4 @@ TODO:
   * Clean-up code
   * More abstraction!
   * Suggestions for inside classes
+  * Smarter suggestions for after commas, operators (+ other symbols) instead of space
