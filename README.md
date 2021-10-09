@@ -1,5 +1,5 @@
 # DumbShell
-Boring shell in Python that I glued together. Unstable.
+Boring shell in Python that I glued together. Unusable.
 
 ## Use
 Import it then run like so...
